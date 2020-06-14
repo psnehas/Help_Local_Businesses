@@ -1,3 +1,5 @@
+"""This module is used to manage various functions regarding interactions with the database"""
+
 import sqlite3
 
 class Book:
@@ -10,14 +12,19 @@ class Book:
 
 class SQLiteConnection:
     def __init__(self):
+        self.create_connection()
+
+    def create_connection(self):
+        """Establishes the connection to the database"""
         try:
             self.conn = sqlite3.connect('books.db')
         except exception as e:
             print(e)
-        self.c = self.conn.cursor()
 
     def create_table(self):
-        self.c.execute('''CREATE TABLE IF NOT EXISTS book_list (
+        """This is used to create a new table in the database"""
+        cur = self.conn.cursor
+        cur.execute('''CREATE TABLE IF NOT EXISTS book_list (
                         ROWID INTEGER PRIMARY KEY AUTOINCREMENT,
                         title TEXT NOT_NULL,
                         author TEXT NOT_NULL,
@@ -28,17 +35,43 @@ class SQLiteConnection:
         self.conn.commit()
 
     def insert_entry(self, book):
-        self.c.execute("insert into book_list values (?, ?, ?, ?, ?)", (None, book.title, book.author, book.year, book.store))
+        """Inserts a book object entry into the database"""
+        cur = self.conn.cursor()
+        cur.execute("insert into book_list values (?, ?, ?, ?, ?)", (None, book.title, book.author, book.year, book.store))
         self.conn.commit()
 
     def select_all_entries(self):
+        """Selects all entries from the book list"""
         cur = self.conn.cursor()
         cur.execute("SELECT * FROM book_list")
         rows = cur.fetchall()
         for row in rows:
             print(row)
 
+    def select_entries(self, query):
+        """Selects specified books from the book list"""
+        cur = self.conn.cursor()
+        cur.execute("SELECT * FROM book_list WHERE ?=title OR ?=author OR ?=storename", (query, query, query))
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+
     def delete_all_entries(self):
+        """Clears the entire table of entries"""
         cur = self.conn.cursor()
         cur.execute("DELETE FROM book_list")
         self.conn.commit()
+
+    def delete_entry(self, book):
+        """Deletes given book from the database"""
+
+        cur = self.conn.cursor()
+        if isinstance(book, Book):
+            cur.execute("DELETE FROM book_list WHERE title=? AND store=?", (book.title, book.store))
+        elif isinstance(book, str):
+            cur.execute("DELETE FROM book_list WHERE title=? OR author=?", (book, book))
+        self.conn.commit()
+
+    def close_connection(self):
+        """Closes the connection after making changes"""
+        self.conn.close()
