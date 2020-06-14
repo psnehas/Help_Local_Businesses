@@ -24,14 +24,36 @@ class SQLiteConnection:
     def create_table(self):
         """This is used to create a new table in the database"""
         cur = self.conn.cursor
-        cur.execute('''CREATE TABLE IF NOT EXISTS book_list (
-                        ROWID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        title TEXT NOT_NULL,
-                        author TEXT NOT_NULL,
-                        year INTEGER NOT_NULL,
-                        storename TEXT NOT_NULL
+        books_list_table = '''CREATE TABLE IF NOT EXISTS books_list (
+                        bid INTEGER PRIMARY KEY AUTOINCREMENT,
+                        bookName TEXT NOT_NULL,
+                        authorName TEXT NOT_NULL,
+                        yearPublished INTEGER NOT_NULL,
+                        bookCategory TEXT NOT_NULL,
+                        bookPrice FLOAT NOT_NULL
                     )
-                    ''')
+                    '''
+        customer_table = '''CREATE TABLE IF NOT EXISTS customer_data (
+                        cid INTEGER PRIMARY KEY AUTOINCREMENT,
+                        firstName TEXT NOT_NULL,
+                        lastName TEXT NOT_NULL,
+                        customerEmail TEXT NOT_NULL,
+                        customerPassword TEXT NOT_NULL,
+                        customerZipCode INTEGER NOT_NULL
+                    )
+                    '''
+        bookseller_table = '''CREATE TABLE IF NOT EXISTS bookseller_data (
+                        bsid INTEGER PRIMARY KEY AUTOINCREMENT,
+                        storeName TEXT NOT_NULL,
+                        storeLocation TEXT NOT_NULL,
+                        storeOwnerName INTEGER NOT_NULL,
+                        storeContactNum TEXT NOT_NULL,
+                        storeOwnerEmail FLOAT NOT_NULL
+                    )
+                    '''
+        cur.execute(books_list_table)
+        cur.execute(customer_table)
+        cur.execute(bookseller_table)
         self.conn.commit()
 
     def insert_entry(self, book):
