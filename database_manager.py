@@ -113,6 +113,7 @@ class SQLiteConnection:
         self.conn.commit()
 
     def select_all_booksellers(self):
+        """Prints all the booksellers details"""
         cur = self.conn.cursor()
         cur.execute("SELECT * FROM bookseller_data")
         rows = cur.fetchall()
