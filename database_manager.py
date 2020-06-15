@@ -111,3 +111,11 @@ class SQLiteConnection:
                     (None, store_name, location, name, number, email))
 
         self.conn.commit()
+
+    def select_all_booksellers(self):
+        cur = self.conn.cursor()
+        cur.execute("SELECT * FROM bookseller_data")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+
