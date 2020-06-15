@@ -1,7 +1,7 @@
 A Team Yellowstone Project
 
 # Geekspot
-A hackathon project - an attempt to help local bookstores survive and thrive during the trying times of COVID19 by connecting consumers to local stores that need the help.
+A hackathon project - an attempt to help local bookstores survive and thrive during the trying times of COVID19 by connecting consumers to local stores that need the help. Team Yellowstone comprises of a combination of graduate students, undergraduate students, and a recent graduate. We met each other at the Hackathon and instantly connected as we felt that it is our moral responsibility to help local businesses by leveraging our skills. 
 
 Since the rise of COVID-19 in America, there has been a strong effort towards buying local and helping local businesses that are struggling due to the virus. A JP Morgan Chase study discovered that the median local business in America can only last 27 days without cashflow. We, at team Yellowstone, resonate with the goal of helping local businesses and wanted to make an impact on businesses that have not been helped yet. For the purposes of this 48 hour hackathon, we decided to focus on just one industry that requires help. Since our group comprises of avid readers and independent bookstore enthusiasts, we decided to build our platform for local businesses.  
 
