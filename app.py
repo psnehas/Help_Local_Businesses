@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, render_template, request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
-from forms import RegisterBookseller,RegisterCustomer,LoginSeller
+from forms import RegisterBookseller,RegisterCustomer,LoginCustomer
 from database_manager import SQLiteConnection
 from flask_bootstrap import Bootstrap
 app = Flask(__name__)
@@ -28,16 +28,23 @@ def registerSeller():
 
 @app.route('/registerCustomer', methods=('GET', 'POST'))
 def registerCustomer():
+    customerDetails = []
     form = RegisterCustomer()
-    if form.validate_on_submit():
-        return redirect(url_for('success'))
+    for x in form:
+        customerDetails.append(x.data)
+    database = SQLiteConnection()
+    database.add_seller(customerDetails)
+    database.select_all_booksellers()
+    database.close_connection()
+    if request.method=='POST':
+        return redirect(url_for("loginCustomer"))
     return render_template('registerCustomer.html', title="RegisterCustomer", form=form)
 
 @app.route('/loginSeller', methods = ('GET','POST'))
 def loginSeller():
-    form = LoginSeller()
+    loginDetails = []
+    form = LoginCustomer()
     if request.method=='POST':
-        
         return redirect(url_for("loginSeller"))
 
 @app.route('/')
