@@ -21,9 +21,9 @@ class SQLiteConnection:
         except exception as e:
             print(e)
 
-    def create_table(self, title):
+    def create_table(self):
         """This is used to create a new table in the database"""
-        cur = self.conn.cursor
+        cur = self.conn.cursor()
         books_list_table = '''CREATE TABLE IF NOT EXISTS books_list (
                                         bid INTEGER PRIMARY KEY AUTOINCREMENT,
                                         bookName TEXT NOT_NULL,
@@ -118,4 +118,5 @@ class SQLiteConnection:
         rows = cur.fetchall()
         for row in rows:
             print(row)
+
 
