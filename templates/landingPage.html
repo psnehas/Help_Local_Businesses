@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <div>
     <hr style="border: 5px solid red;">
     <center><i><h1 style = "font-size: 50; font-family:comic sans ms">GEEK<span style="color: #dc143c;">SPOT</span></h1></i></center>
@@ -6,8 +9,11 @@
     <center><table>
         <tr>
             <td><center><button  style="margin-left: 30px; margin-right:100px; width:200px; height:50px; background-color: black; color:white; font-size: 20; font-family:comic sans ms" type="button">Want to buy?</button></center></td>
-            <td><button  style="margin-left:100px; margin-right: 30px; width:200px; height:50px; background-color:lightgray; font-size: 20; font-family:comic sans ms" type="button">Want to sell?</button></td>
+            <td><button  style="margin-left:100px; margin-right: 30px; width:200px; height:50px; background-color:lightgray; font-size: 20; font-family:comic sans ms" type="button">Want to sell?
+            <a href="registerSeller.html"></a>
+            </button></td>
         </tr>
         
     </table></center>
 </div>
+{% endblock %}

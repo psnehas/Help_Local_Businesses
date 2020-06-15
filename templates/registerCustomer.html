@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Contact</h2>
+  <form method="POST" action="/registerCustomer">
+      <div class="form-field">{{ form.firstName.label }} {{ form.firstName(size=20) }}
+        {% if form.firstName.errors %}
+        <ul class="errors">
+          {% for error in form.firstName.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <p>Hello!</p>
+      </div>
+      <div class="form-field">{{ form.lastName.label }} {{ form.lastName }}
+        {% if form.lastName.errors %}
+        <ul class="errors">
+          {% for error in form.lastName.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      </div>
+      <div class="form-field">{{ form.customerEmail.label }} {{ form.customerEmail }}
+        {% if form.customerEmail.errors %}
+        <ul class="errors">
+          {% for error in form.customerEmail.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      </div>
+      <div class="form-field">{{ form.customerPassword.label }} {{ form.customerPassword }}
+        {% if form.customerPassword.errors %}
+        <ul class="errors">
+          {% for error in form.customerPassword.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      </div>
+      <div class="form-field">{{ form.customerZipCode.label }} {{ form.customerZipCode }}
+        {% if form.customerZipCode.errors %}
+        <ul class="errors">
+          {% for error in form.customerZipCode.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      </div>
+      
+      {{ form.submit }}
+  </form>
+</div>
+{% endblock %}
