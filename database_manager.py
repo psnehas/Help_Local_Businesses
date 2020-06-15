@@ -21,39 +21,17 @@ class SQLiteConnection:
         except exception as e:
             print(e)
 
-    def create_table(self):
+    def create_table(self, title):
         """This is used to create a new table in the database"""
         cur = self.conn.cursor
-        books_list_table = '''CREATE TABLE IF NOT EXISTS books_list (
-                        bid INTEGER PRIMARY KEY AUTOINCREMENT,
-                        bookName TEXT NOT_NULL,
-                        authorName TEXT NOT_NULL,
-                        yearPublished INTEGER NOT_NULL,
-                        bookCategory TEXT NOT_NULL,
-                        bookPrice FLOAT NOT_NULL
+        cur.execute('''CREATE TABLE IF NOT EXISTS book_list (
+                        ROWID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        title TEXT NOT_NULL,
+                        author TEXT NOT_NULL,
+                        year INTEGER NOT_NULL,
+                        storename TEXT NOT_NULL
                     )
-                    '''
-        customer_table = '''CREATE TABLE IF NOT EXISTS customer_data (
-                        cid INTEGER PRIMARY KEY AUTOINCREMENT,
-                        firstName TEXT NOT_NULL,
-                        lastName TEXT NOT_NULL,
-                        customerEmail TEXT NOT_NULL,
-                        customerPassword TEXT NOT_NULL,
-                        customerZipCode INTEGER NOT_NULL
-                    )
-                    '''
-        bookseller_table = '''CREATE TABLE IF NOT EXISTS bookseller_data (
-                        bsid INTEGER PRIMARY KEY AUTOINCREMENT,
-                        storeName TEXT NOT_NULL,
-                        storeLocation TEXT NOT_NULL,
-                        storeOwnerName INTEGER NOT_NULL,
-                        storeContactNum TEXT NOT_NULL,
-                        storeOwnerEmail FLOAT NOT_NULL
-                    )
-                    '''
-        cur.execute(books_list_table)
-        cur.execute(customer_table)
-        cur.execute(bookseller_table)
+                    ''')
         self.conn.commit()
 
     def insert_entry(self, book):
@@ -66,17 +44,16 @@ class SQLiteConnection:
         """Selects all entries from the book list"""
         cur = self.conn.cursor()
         cur.execute("SELECT * FROM book_list")
-        rows = cur.fetchall()
-        for row in rows:
-            print(row)
+        new_books = [Book(row[1], row[3], row[2], row[4]) for row in cur.fetchall()] #List comprehension that contains a list of all of the books in the database converted into book objects
+        return new_books
+
 
     def select_entries(self, query):
         """Selects specified books from the book list"""
         cur = self.conn.cursor()
         cur.execute("SELECT * FROM book_list WHERE ?=title OR ?=author OR ?=storename", (query, query, query))
-        rows = cur.fetchall()
-        for row in rows:
-            print(row)
+        new_books = [Book(row[1], row[3], row[2], row[4]) for row in cur.fetchall()]
+        return new_books
 
     def delete_all_entries(self):
         """Clears the entire table of entries"""
@@ -97,3 +74,6 @@ class SQLiteConnection:
     def close_connection(self):
         """Closes the connection after making changes"""
         self.conn.close()
+
+hi = SQLiteConnection()
+hi.select_all_entries()
